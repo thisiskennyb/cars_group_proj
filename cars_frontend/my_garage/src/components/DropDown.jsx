@@ -27,7 +27,7 @@ function getStyles(name, year, theme) {
   };
 }
 
-export default function MultipleSelect({data, handleChange}) {
+export default function MultipleSelect({data, handleChange, selectedValue, selectField}) {
   const theme = useTheme();
   
 
@@ -36,24 +36,31 @@ export default function MultipleSelect({data, handleChange}) {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="demo-multiple-name-label">{selectField}</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-          multiple
-          value={data}
+          // multiple
+          value={selectedValue}
           onChange={handleChange}
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
+          
+          
         >
-          {data.map((name) => (
+          <MenuItem value="select one">Select One</MenuItem>
+          {data.map((item, index) => (
             <MenuItem
-              key={name.value}
-              value={name.value}
+              
+              value={item}
+              key={index}
+              
             //   style={getStyles(name, year, theme)}
             >
-              {name.value}
+             {item} 
             </MenuItem>
+        
+           
           ))}
         </Select>
       </FormControl>
