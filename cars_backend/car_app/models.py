@@ -4,3 +4,5 @@ from django.db import models
 class CarModel(models.Model):
     make = models.CharField()
     model = models.CharField()
+    year = models.IntegerField(default=2000)
+    option = models.CharField(default="none")

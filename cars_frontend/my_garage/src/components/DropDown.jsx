@@ -18,14 +18,14 @@ const MenuProps = {
 };
 
 
-function getStyles(name, year, theme) {
-  return {
-    fontWeight:
-      year.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+// function getStyles(name, year, theme) {
+//   return {
+//     fontWeight:
+//       year.indexOf(name) === -1
+//         ? theme.typography.fontWeightRegular
+//         : theme.typography.fontWeightMedium,
+//   };
+// }
 
 export default function MultipleSelect({data, handleChange, selectedValue, selectField}) {
   const theme = useTheme();
@@ -51,11 +51,8 @@ export default function MultipleSelect({data, handleChange, selectedValue, selec
           <MenuItem value="select one">Select One</MenuItem>
           {data.map((item, index) => (
             <MenuItem
-              
               value={item}
               key={index}
-              
-            //   style={getStyles(name, year, theme)}
             >
              {item} 
             </MenuItem>

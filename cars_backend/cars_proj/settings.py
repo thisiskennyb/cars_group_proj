@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "cars_proj.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

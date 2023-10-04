@@ -2,23 +2,25 @@ import { useEffect, useState } from "react"
 import axios from 'axios';
 import MultipleSelect from "./DropDown";
 import Button from '@mui/material/Button';
-
+import { Navigate } from "react-router-dom";
 export default function Home () {
 
+  const [shouldRedirect, setShouldRedirect] = useState(false)
     const [selectedValue, setSelectedValue] = useState(null)  
   
     const[years, setYears] = useState([])
-    const[selectedYear, setSelectedYear] = useState(null)
+    const[selectedYear, setSelectedYear] = useState("select one")
 
     const [makes, setMakes] = useState([]);
-    const [selectedMake, setSelectedMake] = useState(null)
+    const [selectedMake, setSelectedMake] = useState("select one")
     
     const [models, setModels] = useState([])
-    const [selectedModel, setSelectedModel] = useState(null)
+    const [selectedModel, setSelectedModel] = useState("select one")
     
     const [options, setOptions] = useState([])
-    const [selectedOption, setSelectedOption] = useState(null)
+    const [selectedOption, setSelectedOption] = useState("select one")
     
+    const [isOption, setIsOption] = useState(false)
     
 // passed into MultipleSelet for dropdown label    
     const selectFields = ["Year", "Make", "Model", "Option"]
@@ -117,10 +119,20 @@ useEffect (() => {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
+      console.log(result)
       const resultsArray =  result.menuItem
-      const filteredArray = resultsArray.map(item => item.text)
-      setOptions(filteredArray)
-      console.log(filteredArray);
+      console.log(resultsArray)
+     if (!Array.isArray(resultsArray)){
+      setOptions([resultsArray['text']])
+     }
+     else{
+
+       const filteredArray = resultsArray.map(item => item.text)
+       
+       setOptions(filteredArray)
+       setIsOption(true)
+       console.log(filteredArray);
+      }
     } catch (error) {
       console.error(error);
       }
@@ -151,13 +163,27 @@ useEffect (() => {
     const handleOptionChange = (e) => {
       setSelectedOption(e.target.value)
     }
-    return(
+
+    const addToGarage = () =>{
+      const token = localStorage.getItem("token")
+      if(token){
+        console.log("token here")
+        alert(`succesfully added ${selectedMake} ${selectedModel}`)
+       
+      }
+      else{
+        
+       setShouldRedirect(true)
+      }
+    }
+    if(shouldRedirect){return <Navigate to='/login'/>}
+    else{return (
         <>
         <MultipleSelect data={years} handleChange={handleYearChange} selectedValue={selectedYear} selectField={selectFields[0]}/>
         <MultipleSelect data={makes} handleChange={handleMakeChange} selectedValue={selectedMake} selectField={selectFields[1]}/>
         <MultipleSelect data={models} handleChange={handleModelChange} selectedValue={selectedModel} selectField={selectFields[2]}/>
         <MultipleSelect data={options} handleChange={handleOptionChange} selectedValue={selectedOption} selectField={selectFields[3]}/>
-        <Button variant="contained">Contained</Button>
+        <Button onClick={addToGarage} variant="contained">Add to Garage</Button>
        </>
-    )
+    )}
 }
