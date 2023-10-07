@@ -3,6 +3,8 @@ import axios from 'axios';
 import MultipleSelect from "./DropDown";
 import Button from '@mui/material/Button';
 import { Navigate } from "react-router-dom";
+import { addCar } from "../api/api";
+
 export default function Home () {
 
   const [shouldRedirect, setShouldRedirect] = useState(false)
@@ -167,7 +169,8 @@ useEffect (() => {
     const addToGarage = () =>{
       const token = localStorage.getItem("token")
       if(token){
-        console.log("token here")
+        const carObj = {"year": selectedYear, "make": selectedMake, "model": selectedModel, "option": selectedOption}
+        addCar(carObj)
         alert(`succesfully added ${selectedMake} ${selectedModel}`)
        
       }

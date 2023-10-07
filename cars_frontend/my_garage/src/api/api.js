@@ -32,4 +32,38 @@ async function basicFetch(url, payload) {
     return body.token
   }
   
+
+  export async function addCar(context) {
+
+    const userToken = localStorage.getItem("token")
+    const payload = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${userToken}`
+      },
+      body: JSON.stringify(context)
+      
+    }
+    const body = await basicFetch("http://localhost:8000/mygarage/", payload)
+    console.log(body)
+    return {"congrats": "on your new car"}
+  }
+
+
+  export async function getCar(context) {
+
+    const userToken = localStorage.getItem("token")
+    const payload = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${userToken}`
+      },
+    }
+    const body = await basicFetch("http://localhost:8000/mygarage/", payload)
+    // const results = await body.json()
+
+    return body
+  }
   
