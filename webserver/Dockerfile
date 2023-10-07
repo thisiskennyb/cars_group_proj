@@ -6,7 +6,7 @@
 
 FROM node:lts-alpine as builder
 
-WORKDIR /frontend
+WORKDIR /cars_frontend/my_garage
 
 # These two lines will allow us to pass in an environment
 # variable when the image is *built* (not run).  For local
@@ -14,9 +14,9 @@ WORKDIR /frontend
 ARG VITE_BASE_URL=localhost
 ENV VITE_BASE_URL=$VITE_BASE_URL
 
-COPY ./frontend/package.json .
+COPY ./cars_frontend/my_garage/package.json .
 RUN npm install
-COPY ./frontend .
+COPY ./cars_frontend/my_garage .
 RUN npm run build
 
 ###########################
@@ -31,4 +31,4 @@ RUN npm run build
 FROM nginx:alpine
 
 COPY ./webserver/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /frontend/dist /usr/share/nginx/html
+COPY --from=builder /cars_frontend/my_garage/dist /usr/share/nginx/html

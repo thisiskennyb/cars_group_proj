@@ -15,8 +15,8 @@ DOCKERHUB_UNAME=thisiskennyb
 BASE_URL=$1
 NEW_VERSION=$2
 
-docker buildx build --platform linux/amd64 --build-arg VITE_BASE_URL=$BASE_URL -t $DOCKERHUB_UNAME/webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
-docker push $DOCKERHUB_UNAME/webserver-prod:$NEW_VERSION
+# docker build --build-arg VITE_BASE_URL=$BASE_URL -t $DOCKERHUB_UNAME/webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
+# docker push $DOCKERHUB_UNAME/webserver-prod:$NEW_VERSION
 
-docker buildx build --platform linux/amd64  -t $DOCKERHUB_UNAME/api-prod:$NEW_VERSION -f backend/Dockerfile ./cars_backend --no-cache
+docker build -t $DOCKERHUB_UNAME/api-prod:$NEW_VERSION -f cars_backend/Dockerfile ./cars_backend --no-cache
 docker push $DOCKERHUB_UNAME/api-prod:$NEW_VERSION
